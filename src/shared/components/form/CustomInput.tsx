@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -16,6 +16,7 @@ interface CustomInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
   errorType?: 'required' | 'email' | 'optional'; // Add more error types as needed
+  errorMessage?: string | null;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -26,9 +27,14 @@ const CustomInput: React.FC<CustomInputProps> = ({
   placeholder,
   secureTextEntry,
   errorType,
+  errorMessage,
   style,
 }) => {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(errorMessage ?? null);
+
+  useEffect(() => {
+    setError(errorMessage ?? null);
+  }, [errorMessage]);
 
   const handleValidation = () => {
     // You can implement various types of error checks here based on your requirements

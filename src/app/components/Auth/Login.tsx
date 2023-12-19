@@ -12,15 +12,24 @@ import CustomButton from '../../../shared/components/form/CustomButton';
 import {appColors} from '../../../shared/constants/color';
 import {commonStyles} from '../../../shared/constants/commonStyles';
 
-const defaultForm = {
+const defaultForm: Record<string, any> = {
   email: '',
   password: '',
+  emailError: null,
+  passwordError: null,
 };
 
 export default function Login() {
   const [useForm, setForm] = useState(defaultForm);
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    const errorMsg = 'This field is required.';
+    setForm({
+      ...useForm,
+      emailError: useForm?.email?.trim()?.length ? null : errorMsg,
+      passwordError: useForm?.password?.trim()?.length ? null : errorMsg,
+    });
+  };
 
   return (
     <View style={loginStyle.main}>
@@ -44,6 +53,7 @@ export default function Login() {
             value={useForm.email}
             onChangeText={text => setForm({...useForm, email: text})}
             placeholder="Enter your email"
+            errorMessage={useForm.emailError}
             errorType="email"
           />
           <CustomInput
@@ -51,6 +61,7 @@ export default function Login() {
             value={useForm.password}
             onChangeText={text => setForm({...useForm, password: text})}
             placeholder="Enter your password"
+            errorMessage={useForm.passwordError}
             errorType="required"
           />
           <TouchableOpacity>
