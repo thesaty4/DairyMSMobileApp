@@ -1,7 +1,16 @@
 import {useState} from 'react';
-import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CustomInput from '../../../shared/components/form/CustomInput';
 import CustomButton from '../../../shared/components/form/CustomButton';
+import {appColors} from '../../../shared/constants/color';
+import {commonStyles} from '../../../shared/constants/commonStyles';
 
 const defaultForm = {
   email: '',
@@ -44,6 +53,11 @@ export default function Login() {
             placeholder="Enter your password"
             errorType="required"
           />
+          <TouchableOpacity>
+            <View>
+              <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
+            </View>
+          </TouchableOpacity>
           <View style={loginStyle.action}>
             <CustomButton
               buttonStyle={loginStyle.btn}
@@ -64,14 +78,10 @@ export default function Login() {
 const loginStyle = StyleSheet.create({
   main: {
     height: '100%',
-    flexDirection: 'column',
+    ...commonStyles.flexColumn,
   },
   bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    ...commonStyles.coverImg,
   },
   logoContainer: {
     width: 350,
@@ -89,9 +99,15 @@ const loginStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   topSection: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...commonStyles.centerContainer,
+  },
+  forgotPassword: {
+    fontSize: 12,
+    marginBottom: 10,
+    color: appColors.primary,
+    borderBottomWidth: 1,
+    width: 100,
+    borderColor: appColors.primary,
   },
   loginText: {
     fontSize: 30,
@@ -105,9 +121,8 @@ const loginStyle = StyleSheet.create({
   },
   action: {
     width: '100%',
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...commonStyles.flexSpaceBetween,
   },
   btn: {
     width: '49%',

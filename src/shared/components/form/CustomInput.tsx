@@ -7,6 +7,7 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import {appColors} from '../../constants/color';
 
 interface CustomInputProps {
   label: string;
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: '#3498db',
+    borderColor: appColors.primary,
     borderWidth: 1,
     paddingHorizontal: 8,
     borderRadius: 5,
