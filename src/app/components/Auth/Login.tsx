@@ -1,18 +1,13 @@
 import {useState} from 'react';
-import {
-  Image,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomInput from '../../../shared/components/form/CustomInput';
 import CustomButton from '../../../shared/components/form/CustomButton';
 import {appColors} from '../../../shared/constants/color';
 import {commonStyles} from '../../../shared/constants/commonStyles';
+import {useNavigation} from '@react-navigation/native';
+import {router} from '../../../shared/routes/router';
 
-const defaultForm: Record<string, any> = {
+export const defaultForm: Record<string, any> = {
   email: '',
   password: '',
   emailError: null,
@@ -21,8 +16,9 @@ const defaultForm: Record<string, any> = {
 
 export default function Login() {
   const [useForm, setForm] = useState(defaultForm);
+  const useRouter: any = useNavigation();
 
-  const handleLogin = () => {
+  const handleForm = () => {
     const errorMsg = 'This field is required.';
     setForm({
       ...useForm,
@@ -33,7 +29,6 @@ export default function Login() {
 
   return (
     <View style={loginStyle.main}>
-      <StatusBar backgroundColor="rgba(0, 0, 0, 0)" translucent />
       <Image
         source={require('../../../../assets/images/background.png')}
         style={loginStyle.bgImage}
@@ -64,7 +59,10 @@ export default function Login() {
             errorMessage={useForm.passwordError}
             errorType="required"
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              useRouter.navigate(router.forgotPassword.route);
+            }}>
             <View>
               <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
             </View>
@@ -73,12 +71,14 @@ export default function Login() {
             <CustomButton
               buttonStyle={loginStyle.btn}
               title="Login"
-              onPress={handleLogin}></CustomButton>
+              onPress={handleForm}></CustomButton>
             <CustomButton
               buttonStyle={loginStyle.btn}
               title="SignUp"
               outline={true}
-              onPress={handleLogin}></CustomButton>
+              onPress={() => {
+                useRouter.navigate(router.signUp.route);
+              }}></CustomButton>
           </View>
         </View>
       </View>
@@ -86,7 +86,7 @@ export default function Login() {
   );
 }
 
-const loginStyle = StyleSheet.create({
+export const loginStyle = StyleSheet.create({
   main: {
     height: '100%',
     ...commonStyles.flexColumn,
