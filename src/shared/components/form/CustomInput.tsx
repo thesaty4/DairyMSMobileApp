@@ -79,7 +79,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
   },

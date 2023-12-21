@@ -6,18 +6,34 @@ import CustomButton from '../../../shared/components/form/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {router} from '../../../shared/routes/router';
 import {ScrollView} from 'react-native-gesture-handler';
+import RadioGroup, {
+  RadioItem,
+} from '../../../shared/components/view/RadioGroup';
+
+export const userTypes: RadioItem[] = [
+  {
+    key: 'rider',
+    label: 'Rider',
+    value: 'rider',
+  },
+  {
+    key: 'supplier',
+    label: 'Supplier',
+    value: 'supplier',
+  },
+];
 
 const defaultForm = {
   email: '',
-  firstName: '',
-  lastName: '',
+  name: '',
   password: '',
-  ConfirmPass: '',
+  confirmPass: '',
+  userType: '',
   firstNameError: null,
   lastNameError: null,
   emailError: null,
   passwordError: null,
-  ConfirmPassError: null,
+  confirmPassError: null,
 };
 
 function SignUp() {
@@ -44,39 +60,53 @@ function SignUp() {
           <Text style={loginStyle.loginText}>Sign Up</Text>
         </View>
         <ScrollView style={signUpStyle.bottomSection}>
+          <RadioGroup
+            label="User Type"
+            flat={true}
+            items={userTypes}
+            onSelect={text => {
+              setForm({...useForm, userType: text});
+            }}></RadioGroup>
           <CustomInput
-            label="First Name *"
-            value={useForm.firstName}
-            onChangeText={text => setForm({...useForm, firstName: text})}
+            label="Name *"
+            value={useForm.name}
+            onChangeText={text => setForm({...useForm, name: text})}
             placeholder="Enter your first name"
             errorMessage={useForm.emailError}
             errorType="email"
           />
           <CustomInput
-            label="Last Name"
-            value={useForm.lastName}
-            onChangeText={text => setForm({...useForm, lastName: text})}
-            placeholder="Enter your last Name"
+            label="Email *"
+            value={useForm.email}
+            onChangeText={text => setForm({...useForm, email: text})}
+            placeholder="ex - yourid@domain.com"
             errorMessage={useForm.passwordError}
-            errorType="required"
+            errorType="email"
+            style={useForm.userType != 'rider' && {marginBottom: 70}}
           />
-          <CustomInput
-            label="Password *"
-            value={useForm.password}
-            onChangeText={text => setForm({...useForm, password: text})}
-            placeholder="Enter your password"
-            errorMessage={useForm.passwordError}
-            errorType="required"
-          />
-          <CustomInput
-            label="Confirm Password *"
-            value={useForm.ConfirmPass}
-            onChangeText={text => setForm({...useForm, ConfirmPass: text})}
-            placeholder="Enter your confirm password"
-            errorMessage={useForm.passwordError}
-            errorType="required"
-          />
+          {useForm.userType == 'rider' && (
+            <>
+              <CustomInput
+                label="Password *"
+                value={useForm.password}
+                onChangeText={text => setForm({...useForm, password: text})}
+                placeholder="Enter your password"
+                errorMessage={useForm.passwordError}
+                errorType="required"
+              />
+              <CustomInput
+                label="Confirm Password *"
+                value={useForm.confirmPass}
+                onChangeText={text => setForm({...useForm, confirmPass: text})}
+                placeholder="Enter your confirm password"
+                errorMessage={useForm.passwordError}
+                errorType="required"
+                style={{marginBottom: 70}}
+              />
+            </>
+          )}
         </ScrollView>
+
         <View style={signUpStyle.action}>
           <CustomButton
             buttonStyle={loginStyle.btn}
@@ -94,27 +124,23 @@ function SignUp() {
     </View>
   );
 }
-
 export default SignUp;
 
-const signUpStyle = StyleSheet.create({
+export const signUpStyle = StyleSheet.create({
   topSection: {
     display: 'flex',
     alignItems: 'center',
     marginTop: 50,
   },
   bottomSection: {
-    marginTop: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     margin: 40,
     padding: 40,
-    paddingBottom: 0,
+    marginTop: 40,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    marginBottom: 100,
     borderRadius: 10,
   },
   action: {
     ...loginStyle.action,
-    paddingTop: 0,
-    paddingBottom: 10,
-    padding: 49,
   },
 });

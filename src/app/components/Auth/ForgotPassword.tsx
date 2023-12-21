@@ -27,7 +27,7 @@ function ForgotPassword() {
               source={require('../../../../assets/images/logo.png')}
               style={loginStyle.logoImage}></Image>
           </View>
-          <Text style={loginStyle.loginText}>Reset Password</Text>
+          <Text style={loginStyle.loginText}>Forgot Password</Text>
         </View>
         <View style={loginStyle.bottomSection}>
           <CustomInput
@@ -38,21 +38,9 @@ function ForgotPassword() {
             errorMessage={useForm.emailError}
             errorType="email"
           />
-          <CustomInput
-            label="Password"
-            value={useForm.password}
-            onChangeText={text => setForm({...useForm, password: text})}
-            placeholder="Enter your password"
-            errorMessage={useForm.passwordError}
-            errorType="required"
-          />
-          <View style={loginStyle.action}>
+          <View>
+            <CustomButton title="Send Link" onPress={handleForm}></CustomButton>
             <CustomButton
-              buttonStyle={loginStyle.btn}
-              title="Reset Password"
-              onPress={handleForm}></CustomButton>
-            <CustomButton
-              buttonStyle={loginStyle.btn}
               title="Back To Login"
               outline={true}
               onPress={() => {

@@ -15,7 +15,7 @@ export const defaultForm: Record<string, any> = {
 };
 
 export default function Login() {
-  const [useForm, setForm] = useState(defaultForm);
+  const [useForm, setForm] = useState({...defaultForm});
   const useRouter: any = useNavigation();
 
   const handleForm = () => {
@@ -67,19 +67,19 @@ export default function Login() {
               <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
             </View>
           </TouchableOpacity>
-          <View style={loginStyle.action}>
-            <CustomButton
-              buttonStyle={loginStyle.btn}
-              title="Login"
-              onPress={handleForm}></CustomButton>
-            <CustomButton
-              buttonStyle={loginStyle.btn}
-              title="SignUp"
-              outline={true}
-              onPress={() => {
-                useRouter.navigate(router.signUp.route);
-              }}></CustomButton>
-          </View>
+        </View>
+        <View style={loginStyle.action}>
+          <CustomButton
+            buttonStyle={loginStyle.btn}
+            title="Login"
+            onPress={handleForm}></CustomButton>
+          <CustomButton
+            buttonStyle={loginStyle.btn}
+            title="SignUp"
+            outline={true}
+            onPress={() => {
+              useRouter.navigate(router.signUp.route);
+            }}></CustomButton>
         </View>
       </View>
     </View>
@@ -128,12 +128,20 @@ export const loginStyle = StyleSheet.create({
   bottomSection: {
     flex: 1,
     marginTop: 40,
+    marginBottom: 40,
     paddingHorizontal: 40,
   },
   action: {
     width: '100%',
     flexDirection: 'row',
     ...commonStyles.flexSpaceBetween,
+    position: 'absolute',
+    bottom: 0,
+    padding: 49,
+    backgroundColor: 'white',
+    paddingBottom: 5,
+    paddingTop: 5,
+    elevation: 10,
   },
   btn: {
     width: '49%',
