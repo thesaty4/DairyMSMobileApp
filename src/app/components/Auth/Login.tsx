@@ -6,6 +6,8 @@ import {appColors} from '../../../shared/constants/color';
 import {commonStyles} from '../../../shared/constants/commonStyles';
 import {useNavigation} from '@react-navigation/native';
 import {router} from '../../../shared/routes/router';
+import {useDispatch} from 'react-redux';
+import {showMessage} from '../../../redux/slices/snackbarSlice';
 
 export const defaultForm: Record<string, any> = {
   email: '',
@@ -15,16 +17,22 @@ export const defaultForm: Record<string, any> = {
 };
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [useForm, setForm] = useState({...defaultForm});
   const useRouter: any = useNavigation();
 
   const handleForm = () => {
     const errorMsg = 'This field is required.';
+    const emailError = useForm?.email?.trim()?.length;
+    const passwordError = useForm?.password?.trim()?.length;
+
     setForm({
       ...useForm,
-      emailError: useForm?.email?.trim()?.length ? null : errorMsg,
-      passwordError: useForm?.password?.trim()?.length ? null : errorMsg,
+      emailError: emailError ? null : errorMsg,
+      passwordError: passwordError ? null : errorMsg,
     });
+    if (!(emailError || passwordError))
+      dispatch(showMessage({message: 'All filed required !', type: 'error'}));
   };
 
   return (

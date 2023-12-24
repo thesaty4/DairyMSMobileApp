@@ -57,4 +57,10 @@ export const commonStyles = StyleSheet.create({
   fullHeight: {
     height: '100%',
   },
+  textShadow: {
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // shadow color
+    textShadowOffset: {width: 2, height: 2}, // shadow offset (x, y)
+    textShadowRadius: 5, // shadow blur radius
+  },
 });
