@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -7,6 +7,7 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import {appColors} from '../../constants/color';
 
 interface CustomInputProps {
   label: string;
@@ -15,6 +16,7 @@ interface CustomInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
   errorType?: 'required' | 'email' | 'optional'; // Add more error types as needed
+  errorMessage?: string | null;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -25,9 +27,14 @@ const CustomInput: React.FC<CustomInputProps> = ({
   placeholder,
   secureTextEntry,
   errorType,
+  errorMessage,
   style,
 }) => {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(errorMessage ?? null);
+
+  useEffect(() => {
+    setError(errorMessage ?? null);
+  }, [errorMessage]);
 
   const handleValidation = () => {
     // You can implement various types of error checks here based on your requirements
@@ -72,7 +79,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
   },
@@ -81,11 +88,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   input: {
-    height: 40,
-    borderColor: '#3498db',
+    height: 45,
+    borderColor: appColors.primary,
     borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderRadius: 50,
     fontSize: 12,
   },
   errorInput: {

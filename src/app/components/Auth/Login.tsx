@@ -1,21 +1,34 @@
 import {useState} from 'react';
-import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomInput from '../../../shared/components/form/CustomInput';
 import CustomButton from '../../../shared/components/form/CustomButton';
+import {appColors} from '../../../shared/constants/color';
+import {commonStyles} from '../../../shared/constants/commonStyles';
+import {useNavigation} from '@react-navigation/native';
+import {router} from '../../../shared/routes/router';
 
-const defaultForm = {
+export const defaultForm: Record<string, any> = {
   email: '',
   password: '',
+  emailError: null,
+  passwordError: null,
 };
 
 export default function Login() {
-  const [useForm, setForm] = useState(defaultForm);
+  const [useForm, setForm] = useState({...defaultForm});
+  const useRouter: any = useNavigation();
 
-  const handleLogin = () => {};
+  const handleForm = () => {
+    const errorMsg = 'This field is required.';
+    setForm({
+      ...useForm,
+      emailError: useForm?.email?.trim()?.length ? null : errorMsg,
+      passwordError: useForm?.password?.trim()?.length ? null : errorMsg,
+    });
+  };
 
   return (
     <View style={loginStyle.main}>
-      <StatusBar backgroundColor="rgba(0, 0, 0, 0)" translucent />
       <Image
         source={require('../../../../assets/images/background.png')}
         style={loginStyle.bgImage}
@@ -35,6 +48,7 @@ export default function Login() {
             value={useForm.email}
             onChangeText={text => setForm({...useForm, email: text})}
             placeholder="Enter your email"
+            errorMessage={useForm.emailError}
             errorType="email"
           />
           <CustomInput
@@ -42,36 +56,43 @@ export default function Login() {
             value={useForm.password}
             onChangeText={text => setForm({...useForm, password: text})}
             placeholder="Enter your password"
+            errorMessage={useForm.passwordError}
             errorType="required"
           />
-          <View style={loginStyle.action}>
-            <CustomButton
-              buttonStyle={loginStyle.btn}
-              title="Login"
-              onPress={handleLogin}></CustomButton>
-            <CustomButton
-              buttonStyle={loginStyle.btn}
-              title="SignUp"
-              outline={true}
-              onPress={handleLogin}></CustomButton>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              useRouter.navigate(router.forgotPassword.route);
+            }}>
+            <View>
+              <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={loginStyle.action}>
+          <CustomButton
+            buttonStyle={loginStyle.btn}
+            title="Login"
+            onPress={handleForm}></CustomButton>
+          <CustomButton
+            buttonStyle={loginStyle.btn}
+            title="SignUp"
+            outline={true}
+            onPress={() => {
+              useRouter.navigate(router.signUp.route);
+            }}></CustomButton>
         </View>
       </View>
     </View>
   );
 }
 
-const loginStyle = StyleSheet.create({
+export const loginStyle = StyleSheet.create({
   main: {
     height: '100%',
-    flexDirection: 'column',
+    ...commonStyles.flexColumn,
   },
   bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    ...commonStyles.coverImg,
   },
   logoContainer: {
     width: 350,
@@ -89,9 +110,15 @@ const loginStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   topSection: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...commonStyles.centerContainer,
+  },
+  forgotPassword: {
+    fontSize: 12,
+    marginBottom: 10,
+    color: appColors.primary,
+    borderBottomWidth: 1,
+    width: 100,
+    borderColor: appColors.primary,
   },
   loginText: {
     fontSize: 30,
@@ -101,13 +128,20 @@ const loginStyle = StyleSheet.create({
   bottomSection: {
     flex: 1,
     marginTop: 40,
+    marginBottom: 40,
     paddingHorizontal: 40,
   },
   action: {
     width: '100%',
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...commonStyles.flexSpaceBetween,
+    position: 'absolute',
+    bottom: 0,
+    padding: 49,
+    backgroundColor: 'white',
+    paddingBottom: 5,
+    paddingTop: 5,
+    elevation: 10,
   },
   btn: {
     width: '49%',

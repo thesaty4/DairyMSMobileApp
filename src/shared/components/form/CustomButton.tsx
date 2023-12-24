@@ -8,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import {appColors} from '../../constants/color';
 
 interface CustomButtonProps {
   onPress: () => void;
@@ -47,9 +48,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 50,
     alignItems: 'center',
-    backgroundColor: '#3498db',
+    backgroundColor: appColors.primary,
     marginVertical: 10,
   },
   buttonText: {
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
   },
   outlineButton: {
     borderWidth: 1,
-    borderColor: '#3498db',
+    borderColor: appColors.primary,
     backgroundColor: 'transparent',
   },
   outlineButtonText: {
-    color: '#3498db',
+    color: appColors.primary,
   },
 });
 
