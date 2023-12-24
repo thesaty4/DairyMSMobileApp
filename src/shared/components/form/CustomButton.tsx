@@ -48,7 +48,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 50,
     alignItems: 'center',
     backgroundColor: appColors.primary,
     marginVertical: 10,

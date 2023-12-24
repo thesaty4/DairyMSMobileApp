@@ -88,11 +88,11 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
   },
   input: {
-    height: 40,
+    height: 45,
     borderColor: appColors.primary,
     borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderRadius: 50,
     fontSize: 12,
   },
   errorInput: {
