@@ -7,6 +7,7 @@ export interface RadioItem {
   key: string;
   value: any;
   label: string;
+  imgPath?: string;
 }
 
 interface RadioGroupProps {

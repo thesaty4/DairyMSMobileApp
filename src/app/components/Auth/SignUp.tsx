@@ -6,35 +6,9 @@ import CustomButton from '../../../shared/components/form/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {router} from '../../../shared/routes/router';
 import {ScrollView} from 'react-native-gesture-handler';
-import RadioGroup, {
-  RadioItem,
-} from '../../../shared/components/view/RadioGroup';
-
-export const userTypes: RadioItem[] = [
-  {
-    key: 'rider',
-    label: 'Rider',
-    value: 'rider',
-  },
-  {
-    key: 'supplier',
-    label: 'Supplier',
-    value: 'supplier',
-  },
-];
-
-const defaultForm = {
-  email: '',
-  name: '',
-  password: '',
-  confirmPass: '',
-  userType: '',
-  firstNameError: null,
-  lastNameError: null,
-  emailError: null,
-  passwordError: null,
-  confirmPassError: null,
-};
+import RadioGroup from '../../../shared/components/view/RadioGroup';
+import UserTypes, {UserType} from '../../../shared/components/view/UserTypes';
+import {defaultForm, userTypes} from '../../constants/auth';
 
 function SignUp() {
   const [useForm, setForm] = useState({...defaultForm});
@@ -60,31 +34,54 @@ function SignUp() {
           <Text style={loginStyle.loginText}>Sign Up</Text>
         </View>
         <ScrollView style={signUpStyle.bottomSection}>
-          <RadioGroup
-            label="User Type"
-            flat={true}
-            items={userTypes}
-            onSelect={text => {
+          <UserTypes
+            userTypes={userTypes}
+            onSelect={(text: UserType) => {
               setForm({...useForm, userType: text});
-            }}></RadioGroup>
+            }}
+          />
           <CustomInput
             label="Name *"
             value={useForm.name}
             onChangeText={text => setForm({...useForm, name: text})}
-            placeholder="Enter your first name"
-            errorMessage={useForm.emailError}
-            errorType="email"
+            placeholder="Enter your name"
+            errorMessage={useForm.firstNameError}
+            errorType="required"
+          />
+          <RadioGroup
+            label="Gender *"
+            onSelect={(item: string) => {
+              setForm({...useForm, gender: item});
+            }}
+            flat={true}
+            items={[
+              {key: 'male', label: 'Male', value: 'male'},
+              {key: 'female', label: 'Female', value: 'female'},
+              {key: 'other', label: 'Other', value: 'other'},
+            ]}
           />
           <CustomInput
             label="Email *"
             value={useForm.email}
             onChangeText={text => setForm({...useForm, email: text})}
             placeholder="ex - yourid@domain.com"
-            errorMessage={useForm.passwordError}
+            errorMessage={useForm.emailError}
             errorType="email"
-            style={useForm.userType != 'rider' && {marginBottom: 70}}
           />
-          {useForm.userType == 'rider' && (
+          {[UserType.customer, UserType.rider, UserType.supplier].includes(
+            useForm.userType as any,
+          ) && (
+            <CustomInput
+              label="Mobile *"
+              value={useForm.email}
+              onChangeText={text => setForm({...useForm, email: text})}
+              placeholder="+91 00-000-00000"
+              errorMessage={useForm.mobileError}
+              errorType="required"
+              style={{marginBottom: 50}}
+            />
+          )}
+          {/* {useForm.userType == 'customer' && (
             <>
               <CustomInput
                 label="Password *"
@@ -99,12 +96,12 @@ function SignUp() {
                 value={useForm.confirmPass}
                 onChangeText={text => setForm({...useForm, confirmPass: text})}
                 placeholder="Enter your confirm password"
-                errorMessage={useForm.passwordError}
+                errorMessage={useForm.confirmPassError}
                 errorType="required"
                 style={{marginBottom: 70}}
               />
             </>
-          )}
+          )} */}
         </ScrollView>
 
         <View style={signUpStyle.action}>
