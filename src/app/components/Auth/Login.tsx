@@ -71,9 +71,28 @@ export default function Login() {
             onPress={() => {
               useRouter.navigate(router.forgotPassword.route);
             }}>
-            <View>
-              <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
-            </View>
+            <Text style={loginStyle.forgotPassword}>Forgot Password ?</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              useRouter.navigate(router.customer.route);
+            }}>
+            <Text style={loginStyle.forgotPassword}>Go to Customer</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              useRouter.navigate(router.rider.route);
+            }}>
+            <Text style={loginStyle.forgotPassword}>Go to Rider</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              useRouter.navigate(router.supplier.route);
+            }}>
+            <Text style={loginStyle.forgotPassword}>Go to Supplier</Text>
           </TouchableOpacity>
         </View>
         <View style={loginStyle.action}>

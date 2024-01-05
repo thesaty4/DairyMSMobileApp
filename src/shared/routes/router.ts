@@ -1,4 +1,11 @@
-export type AllRoutes = 'home' | 'login' | 'signUp' | 'forgotPassword';
+export type AllRoutes =
+  | 'home'
+  | 'login'
+  | 'signUp'
+  | 'forgotPassword'
+  | 'rider'
+  | 'supplier'
+  | 'customer';
 export const router: Record<AllRoutes, Routes> = {
   home: {
     label: 'Home',
@@ -15,6 +22,18 @@ export const router: Record<AllRoutes, Routes> = {
   forgotPassword: {
     label: 'Forgot Password',
     route: 'forgot-password',
+  },
+  customer: {
+    label: 'Customer',
+    route: 'customer',
+  },
+  rider: {
+    label: 'Rider',
+    route: 'rider',
+  },
+  supplier: {
+    label: 'Supplier',
+    route: 'supplier',
   },
 };
 

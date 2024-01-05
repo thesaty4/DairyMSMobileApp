@@ -22,6 +22,7 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  flexJCenter: {display: 'flex', justifyContent: 'center'},
   flexSpaceBetween: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -62,5 +63,8 @@ export const commonStyles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.75)', // shadow color
     textShadowOffset: {width: 2, height: 2}, // shadow offset (x, y)
     textShadowRadius: 5, // shadow blur radius
+  },
+  imageToWhite: {
+    tintColor: 'white',
   },
 });

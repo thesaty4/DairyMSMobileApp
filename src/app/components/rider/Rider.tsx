@@ -1,0 +1,62 @@
+// App.tsx
+import React from 'react';
+import {View, Image, TouchableOpacity} from 'react-native';
+import {images} from '../../../../assets/images/all-images';
+import {Icons} from '../../../../assets/icons/all-icons';
+import CustomButton from '../../../shared/components/form/CustomButton';
+import {useNavigation} from '@react-navigation/native';
+import {router} from '../../../shared/routes/router';
+import History from '../cards/History';
+import Profile from '../cards/Profile';
+import Scanner from '../cards/Scanner';
+import {ScrollView} from 'react-native-gesture-handler';
+import CustomerCard from '../cards/CustomerCard';
+import {usersStyles} from '../customer/Customer';
+
+const Rider: React.FC = () => {
+  const navigator: any = useNavigation();
+
+  return (
+    <View style={[{flex: 1}, usersStyles.mainWrapper]}>
+      <View style={usersStyles.navbar}>
+        <Image
+          source={images.logo}
+          style={[usersStyles.logo, usersStyles.navbarIcons]}
+        />
+        <View style={usersStyles.navbarActions}>
+          <TouchableOpacity onPress={() => console.log('Settings pressed')}>
+            <Image source={Icons.settings} style={usersStyles.navbarIcons} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('Notification pressed')}>
+            <Image
+              source={Icons.notification}
+              style={usersStyles.navbarIcons}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('Profile pressed')}>
+            <Image source={Icons.user} style={usersStyles.navbarIcons} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <ScrollView>
+        <View style={usersStyles.content}>
+          <Profile type="Rider"></Profile>
+          <Scanner></Scanner>
+          <CustomerCard></CustomerCard>
+          <History></History>
+        </View>
+        <View style={usersStyles.logoutWrapper}>
+          <CustomButton
+            title="Logout"
+            buttonStyle={usersStyles.logout}
+            onPress={() =>
+              navigator.navigate(router.login.route)
+            }></CustomButton>
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
+
+export default Rider;

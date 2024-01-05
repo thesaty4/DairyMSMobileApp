@@ -15,6 +15,7 @@ interface CustomButtonProps {
   title: string;
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
+  standard?: boolean;
   outline?: boolean;
 }
 
@@ -24,6 +25,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   buttonStyle,
   textStyle,
   outline,
+  standard,
 }) => {
   return (
     <TouchableOpacity
@@ -31,6 +33,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         styles.button,
         outline ? styles.outlineButton : null,
         buttonStyle,
+        standard && {borderRadius: 0},
       ]}
       onPress={onPress}>
       <Text
